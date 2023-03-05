@@ -136,18 +136,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  /* throwButton: {
-    margin: 30,
-    marginBottom: 60,
-    flexDirection: "row",
-    padding: 15,
-    width: 180,
-    borderWidth: 5,
-    borderColor: "#E7BB4C",
-    borderRadius: 15,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }, */
   buttonText: {
     color:"white",
     fontSize: 20,
@@ -189,5 +177,15 @@ export default StyleSheet.create({
     backgroundColor: "white",
     marginTop: 10,
     borderRadius: 5
+  },
+  loading: {
+    color: "white",
+    backgroundColor: "#ba87f5",
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginTop: 50
   }
 });

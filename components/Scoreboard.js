@@ -74,8 +74,8 @@ export default function Scoreboard({navigation}) {
         <>
         <Header/>
         <View style={styles.scoreboard}>
-            {currentData.length == 0 ?
-            <Text>Loading scores</Text>
+            {currentData.length <= 0 ?
+            <Text style={styles.loading}>Loading scores</Text>
             :
             <>
             <DataTable style={styles.datatable}>

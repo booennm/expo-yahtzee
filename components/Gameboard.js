@@ -21,7 +21,6 @@ export default function Gameboard({route}) {
     const [dicePointsTotal, setDicePointsTotal] = useState(new Array(MAX_SPOT).fill());
     const [diceSpots, setDiceSpots] = useState(new Array(NBR_OF_DICES).fill(false));
     const [totalPoints, setTotalPoints] = useState(0);
-    const [bonusGot, setBonusGot] = useState(false);
     const [triggerEndCheck, setTriggerEndCheck] = useState(false);
     const [gameOver, setGameOver] = useState(false);
     const [scores, setScores] = useState([]);
@@ -131,11 +130,17 @@ export default function Gameboard({route}) {
         
         let total = points.reduce((partial, a) => partial + a, 0);
 
+        if(total >= BONUS_POINTS_LIMIT) {
+            total = total + BONUS_POINTS;
+        }
+
         return total;
     }
 
     function selectDicePoints(i) {
-        if(started && !selectedDicePoints[i]) {
+        if(nbrOfThrowsLeft > 0) {
+            setStatus("Use all of the throws before using points");
+        }else if(started && !selectedDicePoints[i]) {
             let selected = [...selectedDices];
             let selectedPoints = [...selectedDicePoints];
             let points = [...dicePointsTotal];
@@ -153,6 +158,8 @@ export default function Gameboard({route}) {
             setStarted(false);
 
             return points[i];
+        }else {
+            setStatus("Points for " + (i+1) + " are already set")
         }
     }
 
@@ -186,7 +193,6 @@ export default function Gameboard({route}) {
         setDicePointsTotal(new Array(MAX_SPOT).fill());
         setDiceSpots(new Array(NBR_OF_DICES).fill(false));
         setTotalPoints(0);
-        setBonusGot(false);
         setGameOver(false);
         setScores([]);
         getScoreboardData();
@@ -247,7 +253,11 @@ export default function Gameboard({route}) {
             </Pressable>
             }
             <Text style={styles.total}>Total: {totalPoints}</Text>
+            {totalPoints < BONUS_POINTS_LIMIT ?
             <Text style={styles.bonus}>You are {BONUS_POINTS_LIMIT - totalPoints} points away from bonus</Text>
+            :
+            <Text style={styles.bonus}>You've got the bonus! {BONUS_POINTS} points added</Text>
+            }
             <View style={styles.dicepoints}><Grid>{pointRow}</Grid></View>
             <View style={styles.dicepoints}><Grid>{buttonRow}</Grid></View>
             <Text style={{marginTop: 10, color: "white"}}>Player: {playerName}</Text>
